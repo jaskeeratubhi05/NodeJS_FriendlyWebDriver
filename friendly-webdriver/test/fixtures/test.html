@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Friendly WebDriver</title>
+  </head>
+  <body style='background-color: pink;'>
+    <span id='exists'></span>
+    <div class='occurs_once'></div>
+    <div class='occurs_twice'></div>
+    <div class='occurs_twice'></div>
+
+    <div id='clickable'>content</div>
+
+    <div id='delayed_wrapper'>click to make .exists_soon visible</div>
+
+    <input id='street_input' type='text' name='street'></input>
+    <input id='zipcode_input' type='text'></input>
+    <input id='already_filled' type='text' value='PREVIOUS_VALUE'></input>
+
+    <form id="nested_form">
+      <input type='text' name='street'></input>
+    </form>
+
+    <div class='with_text'>wrong text</div>
+    <div class='with_text'>correct text</div>
+    <div class='with_text'>correct text</div>
+
+    <div class='inner'>nested false</div>
+    <div class='outer'>
+      <div class='inner'></div>
+      <div class='inner'>lorem dipsum</div>
+    </div>
+    <div class='parent'>
+      <div class='child'></div>
+    </div>
+    <div class='visibility'>visible</div>
+    <div class='visibility' style="display:none">invisible</div>
+  </body>
+
+  <script type="text/javascript">
+    var element = document.getElementById('delayed_wrapper');
+    element.addEventListener('click', function () {
+      setTimeout(function () {
+        var p = document.createElement('p');
+        p.setAttribute('class', 'exists_soon');
+        p.innerHTML = 'correct text'
+        element.appendChild(p);
+      }, 500);
+
+    });
+  </script>
+
+  <script type="text/javascript">
+    var wrapper = document.getElementById('delayed_wrapper');
+    var isEnabled = window.localStorage.getItem('renderDelayedReloadItem');
+
+    if(isEnabled) {
+      document.title = 'reload-title';
+      var el = document.createElement('div');
+      el.setAttribute('class', 'reload-item');
+      el.innerHTML = 'correct text';
+      wrapper.appendChild(el);
+    }
+  </script>
+</html>
